@@ -54,6 +54,12 @@ Puch docker image to Azure container
 docker-image-tool.sh -r dycr1.azurecr.io -t v1 push
 ```
 
+## local run
+spark-submit \
+  --conf spark.hadoop.fs.azure.account.key.styakovd1westeurope.dfs.core.windows.net=8r3uJdpQlP5IqX+Y4y2de43h3kMh41YZ/5gP2VlS+8oGZ9vqD+5Fe4LwO+3ZfWaEkCUy76scetWK+ASt0IkbUA== \
+  --packages org.apache.hadoop:hadoop-azure:3.2.0,com.microsoft.azure:azure-storage:8.6.3 \
+  src/main.py --job simple
+
 ## AKS
 Create AKS
 ```
@@ -68,4 +74,5 @@ az aks get-credentials --resource-group aks-rg --name myAKSCluster
 verify the connection
 ```
 kubectl get nodes
+kubectl cluster-info
 ```
