@@ -55,7 +55,7 @@ docker-image-tool.sh -r dycr1.azurecr.io -t spart2aks -p ./docker/Dockerfile bui
 
 Puch docker image to Azure container
 ```
-docker-image-tool.sh -r dycr1.azurecr.io -t v1 push
+docker-image-tool.sh -r dycr1.azurecr.io -t spart2aks push
 ```
 
 
