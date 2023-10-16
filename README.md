@@ -25,6 +25,12 @@ where:
 
 afer this spark command like "df = spark.read...." will work
 
+## local run
+spark-submit \
+  --conf spark.hadoop.fs.azure.account.key.<acc>.dfs.core.windows.net=<key> \
+  --packages org.apache.hadoop:hadoop-azure:3.2.0,com.microsoft.azure:azure-storage:8.6.3 \
+  src/main.py
+
 
 ## Build
 ```
@@ -43,36 +49,14 @@ az acr login --name dycr1
 ```
 build docker image (option -p is for generating pyspark image):
 ```
-docker-image-tool.sh \
-  -r dycr1.azurecr.io \
-  -t v1 \
-  -p docker/Dockerfile build
+docker-image-tool.sh -r dycr1.azurecr.io -t spart2aks -p ./docker/Dockerfile build
 ```
+
 
 Puch docker image to Azure container
 ```
 docker-image-tool.sh -r dycr1.azurecr.io -t v1 push
 ```
 
-## local run
-spark-submit \
-  --conf spark.hadoop.fs.azure.account.key.styakovd1westeurope.dfs.core.windows.net=8r3uJdpQlP5IqX+Y4y2de43h3kMh41YZ/5gP2VlS+8oGZ9vqD+5Fe4LwO+3ZfWaEkCUy76scetWK+ASt0IkbUA== \
-  --packages org.apache.hadoop:hadoop-azure:3.2.0,com.microsoft.azure:azure-storage:8.6.3 \
-  src/main.py --job simple
 
-## AKS
-Create AKS
-```
-az group create --name aks-rg --location eastus
 
-az aks create -g  aks-rg -n myAKSCluster --enable-managed-identity --node-count 1 --generate-ssh-keys
-```
-Connect to AKS cluster
-```
-az aks get-credentials --resource-group aks-rg --name myAKSCluster
-```
-verify the connection
-```
-kubectl get nodes
-kubectl cluster-info
-```
